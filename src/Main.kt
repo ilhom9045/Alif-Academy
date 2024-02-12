@@ -1,3 +1,5 @@
+
+
 fun main() {
     val sampleObject = Sample.newInstance()
     sampleObject.counder++
@@ -5,7 +7,7 @@ fun main() {
     sampleObject2.counder++
     println(sampleObject2.counder)
     println(sampleObject.counder)
-    print("Hello wotld!")
+    print("Hello World!")
 }
 
 class Sample private constructor() {
