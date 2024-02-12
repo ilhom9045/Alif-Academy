@@ -8,6 +8,7 @@ fun main() {
     var a=0
     for (i in array){
        a=a+i
+
     }
 
     println(a/array.size)
