@@ -20,7 +20,7 @@ fun main() {
     bicycle.zvukVelosiped()
     bicycle.exat()
     println("")
-    val truck = Truck("kamaz", "Red", 55)
+    val truck = Truck("kamaz", "Red")
     println(truck.brand)
     println(truck.color)
     truck.gruuzTruck()
@@ -68,8 +68,7 @@ class Car(
 // Создаём Класс Грузовик
 class Truck(
     override var brand: String,
-    override var color: String,
-    var goods: Int
+    override var color: String
 ) : Transport<String> {
     fun horn() {
         println("Гудок")
