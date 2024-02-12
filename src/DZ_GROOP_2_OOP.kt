@@ -5,6 +5,35 @@ interface Transport<T> {
     var color: T
     fun exat()
 }
+
+fun main() {
+    val car = Car("BMW", "SIYOX")
+    println(car.brand)
+    println(car.color)
+    car.signal()
+    car.refuel()
+    car.exat()
+    println("")
+    val bicycle = Bicycle("Bicycle", "Black")
+    println(bicycle.brand)
+    println(bicycle.color)
+    bicycle.zvukVelosiped()
+    bicycle.exat()
+    println("")
+    val truck = Truck("kamaz", "Red", 55)
+    println(truck.brand)
+    println(truck.color)
+    truck.gruuzTruck()
+    truck.horn()
+    truck.exat()
+    println("")
+    val drone = Drone("Mfavik M200", "Blue")
+    println(drone.brand)
+    println(drone.color)
+    drone.fly()
+    drone.horn()
+    drone.exat()
+}
 class Bicycle(
     override var brand: String,
     override var color: String
