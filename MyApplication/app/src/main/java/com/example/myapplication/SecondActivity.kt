@@ -2,44 +2,38 @@ package com.example.myapplication
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
 import android.widget.Button
-import androidx.activity.result.contract.ActivityResultContracts
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
-import com.example.myapplication.SecondActivity.Companion.DATA
-import com.example.myapplication.SecondActivity.Companion.DATA1
-import com.example.myapplication.SecondActivity.Companion.PASSWORD
-import kotlinx.parcelize.Parcelize
-import java.io.Serializable
 
-class MainActivity : AppCompatActivity() {
+class SecondActivity : AppCompatActivity(R.layout.second_activity) {
 
     val TAG = this::class.java.simpleName
 
-    val button by lazy {
-        findViewById<Button>(R.id.button)
-    }
-
-    val launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-        if (it.resultCode == RESULT_OK){
-            val password = it.data?.getStringExtra(PASSWORD)
-            button.text = password
-        }
+    companion object {
+        const val PASSWORD = "password"
+        const val DATA = "data"
+        const val DATA1 = "data1"
+        var sample:String?=null
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        (application as App).dbClass
+        val editText = findViewById<EditText>(R.id.textView)
+
+        findViewById<Button>(R.id.seconActivityButton).setOnClickListener {
+            setResult(RESULT_OK, Intent().apply {
+                putExtra(PASSWORD, editText.text.toString())
+            })
+            println(sample)
+            sample = null
+            onBackPressed()
+        }
         if (savedInstanceState != null) {
             Log.d(TAG, "savedInstanceState!=null")
         }
-        button.setOnClickListener {
-            launcher.launch(Intent(this@MainActivity, SecondActivity::class.java))
-        }
         Log.d(TAG, "onCreate")
-
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -78,14 +72,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
-data class IntentExtra(
-    val password: String,
-    val login: String
-) : Serializable
-
-@Parcelize
-data class IntentExtraParsable(
-    val password: String,
-    val login: String
-) : Parcelable
