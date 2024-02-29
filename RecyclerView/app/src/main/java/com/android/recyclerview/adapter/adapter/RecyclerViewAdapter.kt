@@ -1,12 +1,11 @@
-package com.android.recyclerview.adapter
+package com.android.recyclerview.adapter.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.android.recyclerview.R
+import com.android.recyclerview.adapter.viewholder.ViewHolder
+import com.android.recyclerview.adapter.util.CustomDiffUtil
 import com.android.recyclerview.model.Person
 
 class RecyclerViewAdapter :
@@ -24,15 +23,4 @@ class RecyclerViewAdapter :
 
 }
 
-class ViewHolder(v: View) : RecyclerView.ViewHolder(v) {
 
-    private val ageTextView = itemView.findViewById<TextView>(R.id.ageTextView)
-    private val nameTextView = itemView.findViewById<TextView>(R.id.nameTextView)
-
-
-    fun bind(item: Person) {
-        nameTextView.text = item.name
-        ageTextView.text = item.age.toString()
-    }
-
-}

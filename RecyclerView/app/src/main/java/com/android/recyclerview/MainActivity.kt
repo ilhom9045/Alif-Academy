@@ -5,14 +5,13 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.android.recyclerview.adapter.RecyclerViewAdapter
+import com.android.recyclerview.adapter.adapter.MultiViewHolderRecyclerViewAdapter
 import com.android.recyclerview.model.Person
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 
 class MainActivity : AppCompatActivity() {
-
 
     val items = mutableListOf<Person>().apply {
         repeat(100) {
@@ -38,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    val recyclerViewAdapter = RecyclerViewAdapter()
+    val recyclerViewAdapter = MultiViewHolderRecyclerViewAdapter()
 
     private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 

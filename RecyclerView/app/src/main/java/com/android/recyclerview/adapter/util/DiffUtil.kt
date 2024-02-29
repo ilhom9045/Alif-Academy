@@ -1,4 +1,4 @@
-package com.android.recyclerview.adapter
+package com.android.recyclerview.adapter.util
 
 import androidx.recyclerview.widget.DiffUtil
 import com.android.recyclerview.model.Person
