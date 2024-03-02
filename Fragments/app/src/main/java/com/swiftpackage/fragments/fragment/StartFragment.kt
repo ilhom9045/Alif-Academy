@@ -7,7 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import com.swiftpackage.fragments.R
 
 class StartFragment : Fragment() {
@@ -22,8 +24,12 @@ class StartFragment : Fragment() {
         Log.d(TAG, "onCreateView")
         val view = inflater.inflate(R.layout.start_fragment, container, false)
         val button = view.findViewById<Button>(R.id.button)
+        val textView = view.findViewById<TextView>(R.id.textView)
         val fragment = SecondFragment()
         val simpleName = fragment::class.simpleName
+        setFragmentResultListener(SecondFragmentResult) { key, bundle ->
+            textView.text = bundle.getString("name")
+        }
         button.setOnClickListener {
             requireActivity().supportFragmentManager
                 .apply {
