@@ -4,20 +4,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.IdRes
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.alif.alifchat.R
 import com.alif.alifchat.messenger.fragment.presentation.model.ChatDetailModel
 
-class ChatDetailAdapter(val items: List<ChatDetailModel>) :
-    RecyclerView.Adapter<BaseViewHolder<ChatDetailModel>>() {
+class ChatDetailAdapter(
+    val items: List<ChatDetailModel>,
+    private val listener: ItemClickListener
+) : RecyclerView.Adapter<BaseViewHolder<ChatDetailModel>>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): BaseViewHolder<ChatDetailModel> {
         val layoutInflater = LayoutInflater.from(parent.context)
-        return when (viewType) {
+        val viewHolder = when (viewType) {
             MY_MESSAGE -> MyMessageViewHolder(
                 layoutInflater.inflate(
                     R.layout.chat_detail_my_message,
@@ -42,6 +46,8 @@ class ChatDetailAdapter(val items: List<ChatDetailModel>) :
                 )
             )
         }
+        viewHolder.listener(listener)
+        return viewHolder
     }
 
     override fun getItemCount(): Int = items.size
@@ -66,9 +72,27 @@ class ChatDetailAdapter(val items: List<ChatDetailModel>) :
 
     }
 
+    interface ItemClickListener {
+
+        fun myMessageClicked(item: ChatDetailModel.MyMessage, position: Int)
+
+        fun friedMessageClicked(item: ChatDetailModel.FriendMessage, position: Int)
+
+        fun friedMessageClicked(item: ChatDetailModel.FriendImageMessage, position: Int)
+
+        fun friedImageMessageClicked(item: ChatDetailModel.FriendImageMessage, position: Int)
+
+    }
+
 }
 
 abstract class BaseViewHolder<T>(v: View) : RecyclerView.ViewHolder(v) {
+
+    protected var listener: ChatDetailAdapter.ItemClickListener? = null
+
+    fun listener(listener: ChatDetailAdapter.ItemClickListener) {
+        this.listener = listener
+    }
 
     abstract fun bind(item: T)
 
@@ -79,10 +103,14 @@ abstract class BaseViewHolder<T>(v: View) : RecyclerView.ViewHolder(v) {
 class MyMessageViewHolder(v: View) : BaseViewHolder<ChatDetailModel>(v) {
 
     private val textView: TextView = findViewById(R.id.textView)
+    private val myMessageCardView: CardView = findViewById(R.id.myMessageCardView)
 
     override fun bind(item: ChatDetailModel) {
         if (item is ChatDetailModel.MyMessage) {
             textView.text = item.message
+            myMessageCardView.setOnClickListener {
+                listener?.myMessageClicked(item, adapterPosition)
+            }
         }
     }
 }
@@ -91,11 +119,15 @@ class FriedMessageViewHolder(v: View) : BaseViewHolder<ChatDetailModel>(v) {
 
     private val textView: TextView = findViewById(R.id.textView)
     private val avatar: ImageView = findViewById(R.id.imageView)
+    private val friedCardView: CardView = findViewById(R.id.friedCardView)
 
     override fun bind(item: ChatDetailModel) {
         if (item is ChatDetailModel.FriendMessage) {
             textView.text = item.mesage
             avatar.setImageResource(item.avatar)
+            friedCardView.setOnClickListener {
+                listener?.friedMessageClicked(item, adapterPosition)
+            }
         }
     }
 }
@@ -103,16 +135,24 @@ class FriedMessageViewHolder(v: View) : BaseViewHolder<ChatDetailModel>(v) {
 class FriedImageMessageViewHolder(v: View) : BaseViewHolder<ChatDetailModel>(v) {
 
     private val description: TextView = findViewById(R.id.descriptionTexView)
+    private val linearLayout: LinearLayout = findViewById(R.id.linearLayout)
     private val avatar: ImageView = findViewById(R.id.avatarImageView)
     private val imageView: ImageView = findViewById(R.id.imageView)
     private val link: TextView = findViewById(R.id.linkTextView)
 
     override fun bind(item: ChatDetailModel) {
-        if (item is ChatDetailModel.FriendImageMessage){
+        if (item is ChatDetailModel.FriendImageMessage) {
             avatar.setImageResource(item.avatar)
             imageView.setImageResource(item.image)
             description.text = item.description
             link.text = item.link
+            imageView.setOnClickListener {
+                listener?.friedImageMessageClicked(item, adapterPosition)
+            }
+
+            linearLayout.setOnClickListener {
+                listener?.friedMessageClicked(item, adapterPosition)
+            }
         }
     }
 }
