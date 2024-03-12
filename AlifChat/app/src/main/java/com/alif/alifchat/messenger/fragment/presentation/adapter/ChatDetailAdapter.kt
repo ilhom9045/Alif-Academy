@@ -1,5 +1,7 @@
 package com.alif.alifchat.messenger.fragment.presentation.adapter
 
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.annotation.IdRes
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.alif.alifchat.R
 import com.alif.alifchat.messenger.fragment.presentation.model.ChatDetailModel
@@ -125,6 +128,9 @@ class FriedMessageViewHolder(v: View) : BaseViewHolder<ChatDetailModel>(v) {
         if (item is ChatDetailModel.FriendMessage) {
             textView.text = item.mesage
             avatar.setImageResource(item.avatar)
+            avatar.setOnClickListener {
+                listener?.friedMessageClicked(item, adapterPosition)
+            }
             friedCardView.setOnClickListener {
                 listener?.friedMessageClicked(item, adapterPosition)
             }
@@ -140,19 +146,30 @@ class FriedImageMessageViewHolder(v: View) : BaseViewHolder<ChatDetailModel>(v) 
     private val imageView: ImageView = findViewById(R.id.imageView)
     private val link: TextView = findViewById(R.id.linkTextView)
 
+    init {
+        link.setOnClickListener {
+            // Открываем ссылку в браузере
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link.text.toString()))
+            v.context.startActivity(intent)
+        }
+    }
     override fun bind(item: ChatDetailModel) {
         if (item is ChatDetailModel.FriendImageMessage) {
             avatar.setImageResource(item.avatar)
+            avatar.setOnClickListener {
+                listener?.friedMessageClicked(item, adapterPosition)
+            }
+
             imageView.setImageResource(item.image)
             description.text = item.description
             link.text = item.link
+
+
             imageView.setOnClickListener {
                 listener?.friedImageMessageClicked(item, adapterPosition)
             }
 
-            linearLayout.setOnClickListener {
-                listener?.friedMessageClicked(item, adapterPosition)
-            }
+
         }
     }
 }
