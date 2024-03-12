@@ -26,7 +26,7 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chat_detail),
                     ),
                     ChatDetailModel.FriendImageMessage(
                         description = "Looking forward to the trip.",
-                        link = "Looking forward to the trip.",
+                        link = "https://stackoverflow.com/",
                         avatar = R.drawable.ic_bryin,
                         image = R.drawable.ic_conyon,
                     ),
@@ -48,17 +48,30 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chat_detail),
     }
 
     override fun friedMessageClicked(item: ChatDetailModel.FriendMessage, position: Int) {
-        Toast.makeText(requireContext(), item.toString(), Toast.LENGTH_SHORT).show()
+        val profileScreenFragment = ProfileScreenFragment.newInstance(item.avatar)
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_container, profileScreenFragment)
+            .addToBackStack(null)
+            .commit()
 
     }
 
     override fun friedMessageClicked(item: ChatDetailModel.FriendImageMessage, position: Int) {
-        Toast.makeText(requireContext(), item.toString(), Toast.LENGTH_SHORT).show()
+        val profileScreenFragment = ProfileScreenFragment.newInstance(item.avatar)
 
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_container, profileScreenFragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun friedImageMessageClicked(item: ChatDetailModel.FriendImageMessage, position: Int) {
-        Toast.makeText(requireContext(), item.toString(), Toast.LENGTH_SHORT).show()
-    }
+        val imageDetailFragment = ImageFullFragment.newInstance(item.image)
 
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.main_container, imageDetailFragment)
+            .addToBackStack(null)
+            .commit()
+    }
 }

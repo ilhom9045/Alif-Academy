@@ -63,9 +63,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginBottom="14dp"
+                android:autoLink="web"
+                android:clickable="true"
+                android:focusable="true"
                 android:text="asdawddaw"
-                android:textColor="#74777F"
-                android:textSize="12sp" />
+                android:textColorLink="#1E7CE1"
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
 
