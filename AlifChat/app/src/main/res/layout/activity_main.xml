@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="#9BB8FF">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/main_container"
+        android:name="com.alif.alifchat.messenger.fragment.presentation.ToolBarFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
