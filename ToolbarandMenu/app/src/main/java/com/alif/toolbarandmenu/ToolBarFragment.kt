@@ -1,5 +1,7 @@
 package com.alif.toolbarandmenu
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -45,7 +47,8 @@ class ToolBarFragment : Fragment(R.layout.fragment_toolbar) {
                     }
 
                     R.id.call -> {
-                        Toast.makeText(requireContext(), "Call", Toast.LENGTH_SHORT).show()
+                        val dialcall = Intent(Intent.ACTION_DIAL, Uri.parse("tel:992925555255"))
+                        startActivity(dialcall)
                         true
                     }
 

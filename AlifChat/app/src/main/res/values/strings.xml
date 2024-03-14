@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">AlifChat</string>
+    <string name="setting">Settings</string>
+
 </resources>

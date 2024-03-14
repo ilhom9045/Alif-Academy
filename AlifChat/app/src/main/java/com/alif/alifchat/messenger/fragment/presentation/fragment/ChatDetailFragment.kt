@@ -1,9 +1,18 @@
 package com.alif.alifchat.messenger.fragment.presentation.fragment
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.RecyclerView
 import com.alif.alifchat.R
 import com.alif.alifchat.messenger.fragment.presentation.adapter.ChatDetailAdapter
@@ -41,6 +50,56 @@ class ChatDetailFragment : Fragment(R.layout.fragment_chat_detail),
                 this@ChatDetailFragment
             )
         }
+
+
+        val appCompatActivity = requireActivity() as AppCompatActivity
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        appCompatActivity.setSupportActionBar(toolbar)
+        appCompatActivity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        appCompatActivity.supportActionBar?.title = "ToolBarFragment"
+
+
+        setHasOptionsMenu(true)
+        requireActivity().addMenuProvider(object : MenuProvider{
+            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
+                menuInflater.inflate(R.menu.main_menu, menu)
+
+            }
+
+            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
+                return when (menuItem.itemId) {
+
+                    android.R.id.home -> {
+                        requireActivity().onBackPressed()
+                        true
+                    }
+
+                    R.id.call -> {
+                        val dialcall = Intent(Intent.ACTION_DIAL, Uri.parse("tel:992925555255"))
+                        startActivity(dialcall)
+                        true
+                    }
+
+                    R.id.search -> {
+                        Toast.makeText(requireContext(), "Search", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    R.id.settings -> {
+                        Toast.makeText(requireContext(), "Settings", Toast.LENGTH_SHORT).show()
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+
+
+
+
+        }, viewLifecycleOwner, Lifecycle.State.STARTED)
+
+
     }
 
     override fun myMessageClicked(item: ChatDetailModel.MyMessage, position: Int) {

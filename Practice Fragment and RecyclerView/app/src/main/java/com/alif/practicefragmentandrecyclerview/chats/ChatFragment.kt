@@ -16,6 +16,7 @@ class ChatFragment : Fragment(R.layout.fragment_chats) {
     private val recyclerView by lazy { requireView().findViewById<RecyclerView>(R.id.recyclerView) }
     private val adapter = ChatsAdapter()
 
+
     private val data = listOf(
         ChatModel("Bryan", "What do you think?"),
         ChatModel("Kari", "Looks great!"),
@@ -29,6 +30,7 @@ class ChatFragment : Fragment(R.layout.fragment_chats) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView.adapter = adapter
         adapter.updateItems(data)
+
         view.findViewById<EditText>(R.id.searchEditText).apply {
             background = null
             doAfterTextChanged {
