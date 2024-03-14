@@ -1,7 +1,12 @@
 package com.alif.dialogs
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 
@@ -15,16 +20,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showAlertDialog() {
-        AlertDialog
+
+        val view =
+            LayoutInflater.from(this)
+                .inflate(R.layout.alert_dialog, window.decorView as ViewGroup, false)
+        val dialog = AlertDialog
             .Builder(this)
-            .setTitle("Title")
-            .setMessage("Message")
+            .setView(view)
             .setCancelable(false)
-            .setPositiveButton(
-                "Yes"
-            ) { dialog, which ->
-                dialog?.dismiss()
-            }.setNegativeButton("No") { dialog, which -> }
-            .create().show()
+            .create().apply {
+                window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            }
+
+        view.findViewById<TextView>(R.id.canselTextView).setOnClickListener {
+            dialog.dismiss()
+        }
+        view.findViewById<TextView>(R.id.deleteTextView).setOnClickListener {
+            //
+            dialog.dismiss()
+        }
+
+
+        dialog.show()
     }
 }
