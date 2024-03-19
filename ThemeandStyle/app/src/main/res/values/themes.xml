@@ -1,0 +1,17 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ThemeAndStyle" parent="BaseTheme" />
+
+    <style name="Theme.ThemeAndStyle" parent="Base.Theme.ThemeAndStyle" />
+
+    <style name="BaseTheme" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="fontFamily">@font/eczar_bold</item>
+        <item name="android:textViewStyle">@style/SubTextView</item>
+        <item name="materialButtonStyle">@style/ButtonStyle</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+
+    </style>
+</resources>
