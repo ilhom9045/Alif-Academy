@@ -28,9 +28,9 @@ class MainActivity : AppCompatActivity() {
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         val viewPager = findViewById<ViewPager2>(R.id.viewPager2)
         viewPager.adapter = ViewPagerAdapter1(supportFragmentManager, lifecycle)
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = position.toString()
-        }.attach()
+//        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+//            tab.text = position.toString()
+//        }.attach()
     }
 }
 

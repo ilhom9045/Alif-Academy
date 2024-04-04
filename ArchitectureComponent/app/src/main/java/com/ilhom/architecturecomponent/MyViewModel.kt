@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 class MyViewModel : ViewModel() {
 
     private var counter = 0
+    private val mutableAccountList = mutableListOf<String>()
 
     private val mutableCounterLiveData = MutableLiveData<Int>()
     val counterLiveData: LiveData<Int> = mutableCounterLiveData
