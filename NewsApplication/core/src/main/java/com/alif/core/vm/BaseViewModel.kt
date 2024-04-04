@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 abstract class BaseViewModel : ViewModel() {
 
-    private val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
+    protected val viewModelScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
 
     protected fun launchUI(block: suspend () -> Unit): Job {
         return viewModelScope.launch {
