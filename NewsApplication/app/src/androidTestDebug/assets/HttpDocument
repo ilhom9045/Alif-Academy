@@ -1,0 +1,22 @@
+
+//Header
+    user-agent: Mozilla/5.0
+    cache-control: max-age=5000
+
+
+//Body
+{
+    json
+}
+
+request ->networkInterceptor(
+    interceptor{
+        header = "content-type":"application/json"
+    }->interceptor{
+       404 ->
+       500 ->
+       401 -> token expired
+    }->interceptor {
+        headers == "Cache control"
+    }
+)-> server

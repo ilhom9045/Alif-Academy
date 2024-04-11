@@ -1,39 +1,49 @@
 package com.alif.newsapplication.view
 
-import android.os.Bundle
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.lifecycle.ViewModelProvider
+import android.view.MenuItem
+import androidx.core.view.get
 import com.alif.core.view.BaseActivity
+import com.alif.core.view.extention.transaction
 import com.alif.newsapplication.R
-import com.alif.newsapplication.vm.MainViewModel
+import com.alif.newsapplication.view.history.view.HistoryFragment
+import com.alif.newsapplication.view.home.view.HomeFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationBarView
+import kotlin.properties.Delegates
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity(R.layout.activity_main),
+    NavigationBarView.OnItemSelectedListener {
 
-    private val viewModel by lazy {
-        ViewModelProvider(this)[MainViewModel::class.java]
+    private var bottomNavigationView: BottomNavigationView by Delegates.notNull()
+
+    override fun initView() {
+        bottomNavigationView = findViewById(R.id.bottomNavigationView)
+        val menuItem = bottomNavigationView.menu[0]
+        menuItem.isCheckable = true
+        onNavigationItemSelected(menuItem)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+    override fun initListener() {
+        super.initListener()
+        bottomNavigationView.setOnItemSelectedListener(this)
+    }
 
-        findViewById<TextView>(R.id.textView).apply {
-            setOnClickListener {
-                viewModel.loadNews()
+    override fun onNavigationItemSelected(menu: MenuItem): Boolean {
+        return when (menu.itemId) {
+
+            R.id.home -> {
+                transaction(R.id.fragmentContainer, HomeFragment())
+                true
             }
-            viewModel.liveData.observe(this@MainActivity){
-                text = it.first().content
+
+            R.id.history -> {
+                transaction(R.id.fragmentContainer, HistoryFragment())
+                true
             }
+
+            else -> false
         }
     }
+
 }
 

@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("kotlin-kapt")
 }
 
 android {
@@ -23,6 +24,12 @@ android {
             )
         }
     }
+    defaultConfig {
+
+        kapt {
+            arguments {arg("room.schemaLocation", "$projectDir/schemas")}
+        }
+    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -34,11 +41,16 @@ android {
 
 dependencies {
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    api(libs.androidx.core.ktx)
+    api(libs.androidx.appcompat)
+    api(libs.material)
     api(libs.retrofit.converter.gson)
-    implementation(libs.retrofit)
+    api(libs.glide)
+    api(libs.retrofit)
+    api("com.squareup.okhttp3:logging-interceptor:4.10.0")
+    api("androidx.room:room-runtime:2.5.0") // Библиотека "Room"
+    kapt("androidx.room:room-compiler:2.5.0") // Кодогенератор
+    api("androidx.room:room-ktx:2.5.0") // Дополнительно для Kotlin Coroutines, Kotlin Flows
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
