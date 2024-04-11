@@ -2,6 +2,39 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("kotlin-kapt")
+    id("maven-publish")
+}
+
+publishing {
+    publications {
+        create<MavenPublication>("release") {
+            run {
+                groupId = "com.alif"
+                artifactId = "core"
+                version = "0.0.0.1"
+                artifact("$buildDir/outputs/aar/${artifactId}-release.aar")
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            /** Configure path of your package repository on Github
+             ** Replace GITHUB_USERID with your/organisation Github userID
+             ** and REPOSITORY with the repository name on GitHub
+             */
+            url = uri("https://maven.pkg.github.com/ilhom9045/Alif-Academy")
+            credentials {
+                /** Create github.properties in root project folder file with
+                 ** gpr.usr=GITHUB_USER_ID & gpr.key=PERSONAL_ACCESS_TOKEN
+                 ** Set env variable GPR_USER & GPR_API_KEY if not adding a properties file**/
+                //./gradlew build
+                //./gradlew publish
+                username = "your_user_name"
+                password = "your_token_for_publish_library"
+            }
+        }
+    }
 }
 
 android {
@@ -27,7 +60,7 @@ android {
     defaultConfig {
 
         kapt {
-            arguments {arg("room.schemaLocation", "$projectDir/schemas")}
+            arguments { arg("room.schemaLocation", "$projectDir/schemas") }
         }
     }
     compileOptions {
