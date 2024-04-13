@@ -1,18 +1,18 @@
-package com.alif.newsapplication.view.home.view
+package com.alif.newsapplication.view.favorite.view
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.alif.core.common.clazz
 import com.alif.core.view.extention.findViewById
 import com.alif.newsapplication.R
-import com.alif.newsapplication.core.view.BaseNewsNetworkVMFragment
+import com.alif.newsapplication.core.view.BaseNewsVMFragment
 import com.alif.newsapplication.model.NewsArticlesModel
+import com.alif.newsapplication.view.favorite.vm.FavoriteFragmentViewModel
 import com.alif.newsapplication.view.home.view.adapter.NewsAdapter
 import com.alif.newsapplication.view.home.view.adapter.viewHolder.NewsViewHolder
-import com.alif.newsapplication.view.home.vm.HomeFragmentViewModel
 import com.alif.newsapplication.view.home.vm.NewsResult
 
-class HomeFragment : BaseNewsNetworkVMFragment<NewsResult, HomeFragmentViewModel>(
+class FavoriteFragment : BaseNewsVMFragment<NewsResult, FavoriteFragmentViewModel>(
     R.layout.fragment_home,
     clazz()
 ), NewsViewHolder.OnNewsItemClickedListener {
@@ -25,20 +25,17 @@ class HomeFragment : BaseNewsNetworkVMFragment<NewsResult, HomeFragmentViewModel
         }
     }
 
-    override fun onInitVMObservers(): HomeFragmentViewModel.() -> Unit = {
+    override fun onInitVMObservers(): FavoriteFragmentViewModel.() -> Unit = {
         resultLiveData.observe {
             when (it) {
                 is NewsResult.NewArticle -> genericAdapter.submitList(it.articles)
                 else -> {}
             }
         }
-        loadNews()
+        loadFavorite()
     }
 
-    override fun onNewsItemClicked(item: NewsArticlesModel, position: Int) {
-        viewModel.insertNews(item)
-    }
-
+    override fun onNewsItemClicked(item: NewsArticlesModel, position: Int) {}
     override fun onLongItemClicked(view: View, item: NewsArticlesModel, position: Int): Boolean {
         return false
     }

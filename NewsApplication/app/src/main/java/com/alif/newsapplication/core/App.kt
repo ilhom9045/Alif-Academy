@@ -1,7 +1,7 @@
-package com.alif.newsapplication.view
+package com.alif.newsapplication.core
 
 import android.app.Application
-import com.alif.newsapplication.model.db.history.DataBaseDataSource
+import com.alif.newsapplication.model.dataSource.db.history.DataBaseDataSource
 
 class App : Application() {
 

@@ -1,5 +1,6 @@
 package com.alif.newsapplication.view.home.view.adapter.viewHolder
 
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,11 +26,16 @@ class NewsViewHolder(
         itemView.setOnClickListener {
             listener.onNewsItemClicked(item, adapterPosition)
         }
+        itemView.setOnLongClickListener {
+            listener.onLongItemClicked(it, item, adapterPosition)
+        }
     }
 
     interface OnNewsItemClickedListener {
 
         fun onNewsItemClicked(item: NewsArticlesModel, position: Int)
+
+        fun onLongItemClicked(view: View, item: NewsArticlesModel, position: Int): Boolean
 
     }
 

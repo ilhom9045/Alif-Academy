@@ -1,5 +1,8 @@
 package com.alif.newsapplication.view.history.view
 
+import android.view.View
+import android.widget.PopupMenu
+import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
 import com.alif.core.common.clazz
 import com.alif.core.view.extention.findViewById
@@ -29,10 +32,39 @@ class HistoryFragment : BaseNewsNetworkVMFragment<NewsResult, HistoryFragmentVie
         resultLiveData.observe {
             when (it) {
                 is NewsResult.NewArticle -> genericAdapter.submitList(it.articles)
+                else -> {}
             }
         }
         loadNews()
     }
 
     override fun onNewsItemClicked(item: NewsArticlesModel, position: Int) {}
+    override fun onLongItemClicked(view: View, item: NewsArticlesModel, position: Int): Boolean {
+        viewModel.isFavorite(item).observe { result ->
+            val popupMenu = PopupMenu(requireContext(), view)
+            popupMenu.inflate(R.menu.favorite_menu)
+            popupMenu.menu[0].title = if (result.isFavorite) {
+                "Remove Favorite"
+            } else {
+                "Add Favorite"
+            }
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.addFavorite -> {
+                        if (result.isFavorite) {
+                            viewModel.removeFavorite(item)
+                        } else {
+                            viewModel.addFavorite(item)
+                        }
+                        true
+                    }
+
+                    else -> false
+                }
+            }
+            popupMenu.show()
+        }
+        return true
+    }
+
 }

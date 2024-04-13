@@ -1,4 +1,4 @@
-package com.alif.newsapplication.model.db.history.entity
+package com.alif.newsapplication.model.dataSource.db.history.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

@@ -1,10 +1,9 @@
-package com.alif.newsapplication.model.db
+package com.alif.newsapplication.model
 
 import com.alif.core.common.Mapper
 import com.alif.core.model.Repository
-import com.alif.newsapplication.model.NewsArticlesModel
-import com.alif.newsapplication.model.db.history.DataBaseDataSource
-import com.alif.newsapplication.model.db.history.entity.NewsHistoryArticleEntity
+import com.alif.newsapplication.model.dataSource.db.history.DataBaseDataSource
+import com.alif.newsapplication.model.dataSource.db.history.entity.NewsHistoryArticleEntity
 
 interface NewsHistoryRepository : Repository {
 
@@ -29,18 +28,6 @@ interface NewsHistoryRepository : Repository {
 
         override suspend fun insertNewsArticle(newsArticle: NewsArticlesModel) {
             DataBaseDataSource.dataBase.historyDao().insertArticle(mapper.map(newsArticle))
-        }
-
-
-        private class NewsArticlesModelMapper :
-            Mapper<NewsArticlesModel, NewsHistoryArticleEntity> {
-            override fun map(data: NewsArticlesModel): NewsHistoryArticleEntity {
-                return NewsHistoryArticleEntity(
-                    title = data.title,
-                    description = data.description,
-                    urlToImage = data.urlToImage
-                )
-            }
         }
     }
 

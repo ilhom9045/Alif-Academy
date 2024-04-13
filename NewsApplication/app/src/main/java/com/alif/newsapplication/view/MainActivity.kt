@@ -5,6 +5,8 @@ import androidx.core.view.get
 import com.alif.core.view.BaseActivity
 import com.alif.core.view.extention.transaction
 import com.alif.newsapplication.R
+import com.alif.newsapplication.view.dictionary.view.DictionaryFragment
+import com.alif.newsapplication.view.favorite.view.FavoriteFragment
 import com.alif.newsapplication.view.history.view.HistoryFragment
 import com.alif.newsapplication.view.home.view.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -38,6 +40,16 @@ class MainActivity : BaseActivity(R.layout.activity_main),
 
             R.id.history -> {
                 transaction(R.id.fragmentContainer, HistoryFragment())
+                true
+            }
+
+            R.id.favorite -> {
+                transaction(R.id.fragmentContainer, FavoriteFragment())
+                true
+            }
+
+            R.id.dictionary -> {
+                transaction(R.id.fragmentContainer, DictionaryFragment())
                 true
             }
 
