@@ -1,9 +1,13 @@
 package com.alif.newsapplication.core.view
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.EditText
 import android.widget.Toast
 import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
+import androidx.core.widget.doAfterTextChanged
 import com.alif.core.view.BaseVMActivity
 import com.alif.core.vm.BaseViewModel
 

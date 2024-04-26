@@ -29,12 +29,9 @@ abstract class BaseFragment(@LayoutRes layout: Int) : Fragment(layout), ViewCont
 
 abstract class BaseVMFragment<Result : Any, Error, VM : BaseViewModel<Result, Error>>(
     @LayoutRes layout: Int,
-    clazz: Class<VM>
 ) : BaseFragment(layout), ViewModelContract<Result, Error, VM> {
 
-    protected val viewModel by lazy(LazyThreadSafetyMode.NONE) {
-        viewModel(this, clazz)
-    }
+    abstract val viewModel: VM
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

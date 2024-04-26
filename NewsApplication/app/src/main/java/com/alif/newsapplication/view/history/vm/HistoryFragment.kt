@@ -8,10 +8,10 @@ import com.alif.newsapplication.model.NewsFavoriteRepository
 import com.alif.newsapplication.model.NewsHistoryRepository
 import com.alif.newsapplication.view.home.vm.NewsResult
 
-class HistoryFragmentViewModel : BaseNewsViewModel<NewsResult>() {
-
-    private val newsHistoryRepository = NewsHistoryRepository.Base()
-    private val newsFavoriteRepository = NewsFavoriteRepository.Base()
+class HistoryFragmentViewModel(
+    private val newsHistoryRepository: NewsHistoryRepository,
+    private val newsFavoriteRepository: NewsFavoriteRepository
+) : BaseNewsViewModel<NewsResult>() {
 
     fun loadNews() {
         launchIO {
@@ -19,7 +19,7 @@ class HistoryFragmentViewModel : BaseNewsViewModel<NewsResult>() {
         }
     }
 
-    fun isFavorite(item: NewsArticlesModel):LiveData<NewsResult.IsNewsFavorite> {
+    fun isFavorite(item: NewsArticlesModel): LiveData<NewsResult.IsNewsFavorite> {
         val mutableLiveData = MutableLiveData<NewsResult.IsNewsFavorite>()
         launchIO {
             mutableLiveData.postValue(

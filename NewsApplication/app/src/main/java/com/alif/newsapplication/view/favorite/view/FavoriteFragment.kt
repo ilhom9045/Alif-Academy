@@ -1,6 +1,7 @@
 package com.alif.newsapplication.view.favorite.view
 
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.alif.core.common.clazz
 import com.alif.core.view.extention.findViewById
@@ -11,13 +12,14 @@ import com.alif.newsapplication.view.favorite.vm.FavoriteFragmentViewModel
 import com.alif.newsapplication.view.home.view.adapter.NewsAdapter
 import com.alif.newsapplication.view.home.view.adapter.viewHolder.NewsViewHolder
 import com.alif.newsapplication.view.home.vm.NewsResult
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FavoriteFragment : BaseNewsVMFragment<NewsResult, FavoriteFragmentViewModel>(
     R.layout.fragment_home,
-    clazz()
 ), NewsViewHolder.OnNewsItemClickedListener {
 
     private val genericAdapter = NewsAdapter(this)
+    override val viewModel: FavoriteFragmentViewModel by viewModel()
 
     override fun initView() {
         findViewById<RecyclerView>(R.id.recyclerView).apply {

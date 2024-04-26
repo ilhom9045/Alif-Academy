@@ -11,10 +11,13 @@ import com.alif.newsapplication.view.history.view.HistoryFragment
 import com.alif.newsapplication.view.home.view.HomeFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.navigation.NavigationBarView
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
+import org.koin.core.scope.Scope
 import kotlin.properties.Delegates
 
 class MainActivity : BaseActivity(R.layout.activity_main),
-    NavigationBarView.OnItemSelectedListener {
+    NavigationBarView.OnItemSelectedListener,AndroidScopeComponent {
 
     private var bottomNavigationView: BottomNavigationView by Delegates.notNull()
 
@@ -56,6 +59,8 @@ class MainActivity : BaseActivity(R.layout.activity_main),
             else -> false
         }
     }
+
+    override val scope: Scope by activityScope()
 
 }
 

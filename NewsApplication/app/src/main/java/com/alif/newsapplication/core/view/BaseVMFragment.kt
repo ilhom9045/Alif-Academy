@@ -10,13 +10,11 @@ import com.alif.core.vm.BaseViewModel
 
 abstract class BaseNewsVMFragment<R : Any, VM : BaseViewModel<R, String>>(
     @LayoutRes layout: Int,
-    clazz: Class<VM>
-) : BaseVMFragment<R, String, VM>(layout, clazz)
+) : BaseVMFragment<R, String, VM>(layout)
 
 abstract class BaseNewsNetworkVMFragment<R : Any, VM : BaseViewModel<R, String>>(
     @LayoutRes layout: Int,
-    clazz: Class<VM>
-) : BaseVMFragment<R, String, VM>(layout, clazz) {
+) : BaseVMFragment<R, String, VM>(layout) {
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

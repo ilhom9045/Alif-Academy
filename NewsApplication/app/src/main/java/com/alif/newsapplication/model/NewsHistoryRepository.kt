@@ -1,9 +1,8 @@
 package com.alif.newsapplication.model
 
-import com.alif.core.common.Mapper
 import com.alif.core.model.Repository
 import com.alif.newsapplication.model.dataSource.db.history.DataBaseDataSource
-import com.alif.newsapplication.model.dataSource.db.history.entity.NewsHistoryArticleEntity
+import com.alif.newsapplication.model.dataSource.db.history.dao.NewsHistoryArticlesDao
 
 interface NewsHistoryRepository : Repository {
 
@@ -12,12 +11,13 @@ interface NewsHistoryRepository : Repository {
     suspend fun insertNewsArticle(newsArticle: NewsArticlesModel)
 
 
-    class Base : Repository.AbstractRepository(), NewsHistoryRepository {
-
-        private val mapper = NewsArticlesModelMapper()
+    class Base(private val mapper: NewsArticlesModelMapper,
+        private val newsHistoryArticlesDao: NewsHistoryArticlesDao
+    ) : Repository.AbstractRepository(),
+        NewsHistoryRepository {
 
         override suspend fun loadNewsHistory(): List<NewsArticlesModel> {
-            return DataBaseDataSource.dataBase.historyDao().getAllArticles().map {
+            return newsHistoryArticlesDao.getAllArticles().map {
                 NewsArticlesModel(
                     title = it.title,
                     description = it.description,
@@ -27,7 +27,7 @@ interface NewsHistoryRepository : Repository {
         }
 
         override suspend fun insertNewsArticle(newsArticle: NewsArticlesModel) {
-            DataBaseDataSource.dataBase.historyDao().insertArticle(mapper.map(newsArticle))
+            newsHistoryArticlesDao.insertArticle(mapper.map(newsArticle))
         }
     }
 

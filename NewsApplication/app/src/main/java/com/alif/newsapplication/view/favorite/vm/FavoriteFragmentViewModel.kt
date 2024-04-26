@@ -6,9 +6,9 @@ import com.alif.newsapplication.model.NewsArticlesModel
 import com.alif.newsapplication.view.home.vm.NewsResult
 
 
-class FavoriteFragmentViewModel : BaseNewsViewModel<NewsResult>() {
-
-    private val newsFavoriteRepository = NewsFavoriteRepository.Base()
+class FavoriteFragmentViewModel(
+    private val newsFavoriteRepository:NewsFavoriteRepository
+) : BaseNewsViewModel<NewsResult>() {
 
     fun loadFavorite() {
         launchIO {

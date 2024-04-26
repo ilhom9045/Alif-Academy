@@ -2,19 +2,21 @@ package com.alif.newsapplication.model
 
 import com.alif.core.model.Repository
 import com.alif.newsapplication.model.dataSource.NewsDataSource
-import com.alif.newsapplication.model.dataSource.network.NetworkClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 
 interface NewsRepository : Repository {
 
     suspend fun asyncLoadNews(): List<NewsArticlesModel>
 
-    class Base : Repository.AbstractRepository(), NewsRepository {
-
-        protected val dataSource = NetworkClient.retrofit.create(NewsDataSource::class.java)
+    class Base(private val dataSource: NewsDataSource) : Repository.AbstractRepository(),
+        NewsRepository {
 
         override suspend fun asyncLoadNews(): List<NewsArticlesModel> {
-            return dataSource.getNewsEverything().articles
+            return withContext(Dispatchers.IO) {
+                dataSource.getNewsEverything().articles
+            }
         }
     }
 }

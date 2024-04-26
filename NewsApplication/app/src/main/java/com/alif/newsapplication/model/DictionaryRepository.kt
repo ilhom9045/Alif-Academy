@@ -11,8 +11,6 @@ interface DictionaryRepository {
     suspend fun asyncLoadWordById(queryId: Int): DictionaryEntity
 
 
-
-
     class Base() : DictionaryRepository {
 
         private val dataBase = DataBaseDataSource.dictionaryDataBase.dictionaryDao()

@@ -44,6 +44,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(project(":core"))
     kapt("androidx.room:room-compiler:2.5.0")
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

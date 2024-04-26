@@ -12,12 +12,12 @@ sealed class NewsResult {
 
 }
 
-class HomeFragmentViewModel : BaseNewsViewModel<NewsResult>() {
-
-    private val repository = NewsRepository.Base()
-    private val newsHistoryRepository = NewsHistoryRepository.Base()
+class HomeFragmentViewModel(
+    private val repository:NewsRepository,
+    private val newsHistoryRepository:NewsHistoryRepository
+) : BaseNewsViewModel<NewsResult>() {
     fun loadNews() {
-        launchIO {
+        launchUI {
             mutableResultLiveData.postValue(NewsResult.NewArticle(repository.asyncLoadNews()))
         }
     }

@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.PopupMenu
 import androidx.core.view.get
 import androidx.recyclerview.widget.RecyclerView
-import com.alif.core.common.clazz
 import com.alif.core.view.extention.findViewById
 import com.alif.newsapplication.R
 import com.alif.newsapplication.core.view.BaseNewsNetworkVMFragment
@@ -13,14 +12,16 @@ import com.alif.newsapplication.view.history.vm.HistoryFragmentViewModel
 import com.alif.newsapplication.view.home.view.adapter.NewsAdapter
 import com.alif.newsapplication.view.home.view.adapter.viewHolder.NewsViewHolder
 import com.alif.newsapplication.view.home.vm.NewsResult
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HistoryFragment : BaseNewsNetworkVMFragment<NewsResult, HistoryFragmentViewModel>(
     R.layout.fragment_home,
-    clazz()
 ), NewsViewHolder.OnNewsItemClickedListener {
 
     private val genericAdapter = NewsAdapter(this)
+
+    override val viewModel: HistoryFragmentViewModel by viewModel()
 
     override fun initView() {
         findViewById<RecyclerView>(R.id.recyclerView).apply {

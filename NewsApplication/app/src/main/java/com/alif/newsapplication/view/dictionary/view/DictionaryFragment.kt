@@ -3,21 +3,22 @@ package com.alif.newsapplication.view.dictionary.view
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import com.alif.core.common.clazz
 import com.alif.core.view.extention.findViewById
 import com.alif.newsapplication.R
 import com.alif.newsapplication.core.view.BaseNewsVMFragment
 import com.alif.newsapplication.view.dictionary.vm.DictionaryFragmentViewModel
 import com.alif.newsapplication.view.dictionary.vm.DictionaryResult
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.properties.Delegates
 
 class DictionaryFragment : BaseNewsVMFragment<DictionaryResult, DictionaryFragmentViewModel>(
     R.layout.fragment_dictionary,
-    clazz()
 ) {
 
     private var wordTextView: TextView by Delegates.notNull()
     private var answersLinearLayout: LinearLayout by Delegates.notNull()
+
+    override val viewModel: DictionaryFragmentViewModel by viewModel()
 
     override fun initView() {
         wordTextView = findViewById(R.id.wordTextView)

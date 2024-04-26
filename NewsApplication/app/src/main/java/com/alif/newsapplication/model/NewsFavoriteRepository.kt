@@ -1,6 +1,6 @@
 package com.alif.newsapplication.model
 
-import com.alif.newsapplication.model.dataSource.db.history.DataBaseDataSource
+import com.alif.newsapplication.model.dataSource.db.history.dao.NewsFavoriteArticlesDao
 import com.alif.newsapplication.model.dataSource.db.history.entity.NewsFavoriteArticleEntity
 
 interface NewsFavoriteRepository {
@@ -14,12 +14,14 @@ interface NewsFavoriteRepository {
     suspend fun asyncIsFavorite(favorite: NewsArticlesModel): Boolean
 
 
-    class Base() : NewsFavoriteRepository {
+    class Base(private val dataBase: NewsFavoriteArticlesDao) : NewsFavoriteRepository {
 
-        private val dataBase = DataBaseDataSource.dataBase.favoriteDao()
 
         override suspend fun asyncRemove(favorite: NewsArticlesModel) {
-            dataBase.deleteFavoriteArticleByTitleAndDescription(favorite.title, favorite.description)
+            dataBase.deleteFavoriteArticleByTitleAndDescription(
+                favorite.title,
+                favorite.description
+            )
         }
 
         override suspend fun asyncLoadFavorites(): List<NewsArticlesModel> {
