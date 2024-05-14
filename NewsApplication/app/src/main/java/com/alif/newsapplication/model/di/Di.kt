@@ -1,5 +1,6 @@
 package com.alif.newsapplication.model.di
 
+import android.content.Context
 import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
@@ -15,14 +16,11 @@ import com.alif.newsapplication.model.dataSource.network.NetworkClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
-
-val dataSourceModule = module {
-    single<NewsDataSource> { NetworkClient.retrofit.create(NewsDataSource::class.java) }
-    single<NewHistoryDataBase> {
-        val miration_from_1_to_2 = object : Migration(1, 2) {
-            override fun migrate(database: SupportSQLiteDatabase) {
-                database.execSQL(
-                    """
+fun createDateBase(context: Context): NewHistoryDataBase {
+    val miration_from_1_to_2 = object : Migration(1, 2) {
+        override fun migrate(database: SupportSQLiteDatabase) {
+            database.execSQL(
+                """
                 CREATE TABLE "favorite" (
                     "title"	TEXT NOT NULL,
                     "description"	TEXT NOT NULL,
@@ -31,12 +29,18 @@ val dataSourceModule = module {
                     PRIMARY KEY("id" AUTOINCREMENT)
                 )
             """.trimIndent()
-                )
-            }
+            )
         }
-        Room.databaseBuilder(androidApplication(), NewHistoryDataBase::class.java, "new_history")
-            .addMigrations(miration_from_1_to_2)
-            .build()
+    }
+    return Room.databaseBuilder(context, NewHistoryDataBase::class.java, "new_history")
+        .addMigrations(miration_from_1_to_2)
+        .build()
+}
+
+val dataSourceModule = module {
+    single<NewsDataSource> { NetworkClient.retrofit.create(NewsDataSource::class.java) }
+    single<NewHistoryDataBase> {
+        createDateBase(androidApplication())
     }
 
     single<NewsHistoryArticlesDao> {

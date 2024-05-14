@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
         android:name=".core.App"
         android:allowBackup="true"
@@ -24,6 +25,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.alif.newsapplication"
+            android:name=".content_provider.NewsHistoryContentProvider"
+            android:exported="true" />
+
     </application>
 
 </manifest>

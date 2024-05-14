@@ -1,5 +1,6 @@
 package com.alif.newsapplication.model.dataSource.db.history.dao
 
+import android.database.Cursor
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -14,5 +15,8 @@ interface NewsHistoryArticlesDao {
 
     @Query("Select * from history")
     fun getAllArticles(): List<NewsHistoryArticleEntity>
+
+    @Query("Select * from history")
+    fun getAllArticlesCursor(): Cursor
 
 }
